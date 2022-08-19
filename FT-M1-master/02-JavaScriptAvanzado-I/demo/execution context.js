@@ -7,10 +7,16 @@ function     person() {
     var last = 'Shariff';
         
     function firstName() {
+        // var sayHello = 'chaoo'; 
+        sayHello = sayHello + " Diego"
+        console.log(sayHello); 
         return first;
     } 
     function lastName() {
         return last;
     } 
-    alert(sayHello + ' ' + firstName() + ' ' + lastName());
+    firstName(); 
+    return (sayHello + ' ' + firstName() + ' ' + lastName());
 }
+
+console.log(person())
