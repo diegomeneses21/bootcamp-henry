@@ -6,7 +6,19 @@ function factorear(num) {
   // los factores por los cuales se va dividiendo a dicho número (De menor a mayor)
   // Ej: factorear(180) --> [1, 2, 2, 3, 3, 5] Ya que 1x2x2x3x3x5 = 180 y son todos números primos
   // Tu código:
+  var array = [1];
+  var primo = 2;
 
+  while (num !== 1) {
+    if (num % primo === 0) {
+      array.push(primo);
+      num = num / primo;
+    } else {
+      primo++;
+    }
+  }
+  return array;
+  console.log("factorear", array);
 }
 
 function bubbleSort(array) {
@@ -14,7 +26,18 @@ function bubbleSort(array) {
   // el array recibido como parámetro
   // Devolver el array ordenado resultante
   // Tu código:
-
+  for (var i = 0; i < array.length; i++) {
+    console.log(array[i])
+    for (var j = 0; j < array.length - 1 - i; j++) {
+      console.log(array[j])
+      if (array[j] > array[j + 1]) {
+        var aux = array[j]
+        array[j] = array[j + 1]
+        array[j + 1] = aux
+      }
+    }
+  }
+  return array
 }
 
 
@@ -24,6 +47,17 @@ function insertionSort(array) {
   // Devolver el array ordenado resultante
   // Tu código:
 
+  for (var i = 1; i < array.length; i++) {
+    var j = i - 1;
+    var aux = array[i] // 1
+    while (j >= 0 && array[j] > aux) {
+      // 5
+      array[j + 1] = array[j]
+      j--
+    }
+    array[j + 1] = aux
+  }
+  return array
 }
 
 
@@ -32,9 +66,42 @@ function selectionSort(array) {
   // el array recibido como parámetro utilizando dos arreglos
   // Devolver el array ordenado resultante
   // Tu código:
+  for (var i = 0; i < array.length - 1; i++) {
+    let min = i
+    for (var j = i + 1; j < array.length; j++) {
+      if (array[j] < array[min]) {
+        //cambio la posicion
+        min = j
+      }
+    }
+    //cambio los valores
+    var aux = array[i]
+    array[i] = array[min]
+    array[min] = aux
 
+  }
+  return array
 }
 
+// function factorearRecursivo(num, array = [1], aux = 2) {
+//   // Factorear el número recibido como parámetro y devolver en un array
+//   // los factores por los cuales se va dividiendo a dicho número (De menor a mayor)
+//   // Ej: factorear(180) --> [1, 2, 2, 3, 3, 5] Ya que 1x2x2x3x3x5 = 180 y son todos números primos
+//   // Tu código:
+//   if (num % aux === 0) {
+//     array.push(aux);
+//     num = num / aux;
+//   } else {
+//     aux++;
+//   }
+//   if (num != 1) {
+//     return factorearRecursivo(num, array, aux);
+//   } else {
+//     console.log("factorearRescursivo", array);
+//     return array;
+//   }
+// }
+// factorearRecursivo(180);
 
 // No modificar nada debajo de esta línea
 // --------------------------------

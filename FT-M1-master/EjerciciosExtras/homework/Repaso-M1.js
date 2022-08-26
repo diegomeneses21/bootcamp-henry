@@ -20,15 +20,21 @@ var countArray = function (array) { // [1,[2,[3,4]],[5,6],7]
 
     for (let i = 0; i < array.length; i++) {
         if (Array.isArray(array[i])) {
-            countArray(array[i]) // Siempre se va a retornar una suma
+            suma = suma + countArray(array[i]) // Siempre se va a retornar una suma
         } else {
             suma = suma + array[i];
         }
     }
 
+    console.log("sumArray", suma);
     return suma;
 }
 
+const arrayA = [1, 2, 3, 4, 5, 6, 7];
+const arrayB = [1, [2, 3, 4]];
+countArray(arrayA);
+countArray(arrayB);
+console.log(countArray(arrayB));
 
 // Implementar la función countProps: a partir de un objeto en el cual cada propiedad puede contener
 // cualquier tipo de dato, determinar la cantidad de propiedades de objetos en cualquier nivel, ya sea el inicial
@@ -49,7 +55,14 @@ var countArray = function (array) { // [1,[2,[3,4]],[5,6],7]
 
 var countProps = function (obj) {
     // Tu código aca:
-
+    var count = 0;
+    for (const key in obj) {
+        count++;
+        if (typeof obj[key] === "object" && Array.isArray(obj[key])) {
+            count = count + countProps(obj[key]);
+        }
+    }
+    return count;
 }
 
 
@@ -61,9 +74,26 @@ var countProps = function (obj) {
 //    lista.changeNotNumbers();
 //    Ahora la lista quedaría: Head --> [1] --> ['2'] --> [false] --> ['Kirikocho] y la función debería haber devuelto el valor 1
 
+// function LinkedList() {
+//     this.head = null;
+// }
+// const milista1 = new LinkedList(); --> LinkedList {head: null}
+
 LinkedList.prototype.changeNotNumbers = function () {
     // Tu código aca:
-
+    let count = 0;
+    let current = this.head;
+    while (current) {
+        if (!isNaN(current.value)) {
+            current = current.next;
+        } else {
+            console.log("is else");
+            current.value = 'Kirikocho';
+            count++;
+            current = current.next;
+        }
+    }
+    return count;
 }
 
 
@@ -92,15 +122,23 @@ var mergeQueues = function (queueOne, queueTwo) {
 
 var closureMult = function (multiplier) {
     // Tu código aca:
-
 }
+// const instClousMultipl = closureMult(5);
+// instClousMultipl(3); // 15
+// instClousMultipl(5); // 25
 
 // Implementar el método sum dentro del prototype de BinarySearchTree
 // que debe retornar la suma total de los valores dentro de cada nodo del arbol
 BinarySearchTree.prototype.sum = function () {
     // Tu código aca:
+    if (!this.left && !this.right) return this.value;
+    if (!this.left) return this.value + this.right.sum();
+    if (!this.right) return this.value + this.left.sum();
+    return this.value + this.left.sum() + this.right.sum();
+};
 
-}
+// Cuenta los nodos de un arbol y si tiene mas de 100 retur "que es un mega arbol"
+
 
 module.exports = {
     countArray,
