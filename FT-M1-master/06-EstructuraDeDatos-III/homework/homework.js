@@ -41,7 +41,7 @@ BinarySearchTree{ value:20,
 */
 
 BinarySearchTree.prototype.size = function () {
-  if (this.left === null && !this.right) return 1;
+  if (!this.left && !this.right) return 1;
   if (!this.left) return 1 + this.right.size();
   if (!this.right) return 1 + this.left.size();
   if (this.left && this.right) return 1 + this.left.size() + this.right.size();
@@ -94,41 +94,113 @@ BinarySearchTree.prototype.contains = function (value) {
       return this.left.contains(value)
     }
   }
-
 }
+
+let arbol1 = new BinarySearchTree(20);
+arbol1.insert(15);
+arbol1.insert(10);
+arbol1.insert(5);
+arbol1.insert(50);
+console.log(arbol1);
+console.log(arbol1.contains(5));
 
 // cb = function(val){ arrayPrueba.push(val); }
 // const arrayResult = []
 // "in-order"   L V R
 
+// BinarySearchTree.prototype.depthFirstForEach = function (cb, order) {
+//   if (!order || order === "in-order") {
+//     this.left && this.left.depthFirstForEach(cb, order)
+//     cb(this.value)
+//     this.right && this.right.depthFirstForEach(cb, order)
+//   } else if (order === "post-order") {
+//     this.left && this.left.depthFirstForEach(cb, order)
+//     this.right && this.right.depthFirstForEach(cb, order)
+//     cb(this.value)
+//   } else { // "pre-order"
+//     cb(this.value)
+//     this.left && this.left.depthFirstForEach(cb, order)
+//     this.right && this.right.depthFirstForEach(cb, order)
+//   }
+// }
+
+// BinarySearchTree.prototype.breadthFirstForEach = function (cb, array = []) {
+//   if (this.left) {
+//     array.push(this.left)
+//   }
+//   if (this.right) {
+//     array.push(this.right)
+//   }
+//   cb(this.value)
+//   if (array.length > 0) {
+//     array.shift().breadthFirstForEach(cb, array)
+//   }
+// }
+
 BinarySearchTree.prototype.depthFirstForEach = function (cb, order) {
-  if (!order || order === "in-order") {
-    this.left && this.left.depthFirstForEach(cb, order)
+  // "post-order", "pre-order", "in-order"
+
+  // root - izq - der
+  if (order === "pre-order") {
     cb(this.value)
-    this.right && this.right.depthFirstForEach(cb, order)
-  } else if (order === "post-order") {
-    this.left && this.left.depthFirstForEach(cb, order)
-    this.right && this.right.depthFirstForEach(cb, order)
+    if (this.left) this.left.depthFirstForEach(cb, order);
+    if (this.right) this.right.depthFirstForEach(cb, order);
+  }
+
+  // izq - der - root
+  else if (order === "post-order") {
+    if (this.left) this.left.depthFirstForEach(cb, order);
+    if (this.right) this.right.depthFirstForEach(cb, order);
     cb(this.value)
-  } else { // "pre-order"
+  }
+
+  // izq - root - der
+  else /* if (order === "in-order")*/ {
+    if (this.left) this.left.depthFirstForEach(cb, order);
     cb(this.value)
-    this.left && this.left.depthFirstForEach(cb, order)
-    this.right && this.right.depthFirstForEach(cb, order)
+    if (this.right) this.right.depthFirstForEach(cb, order);
+  }
+
+}
+
+arbol1.insert(16);
+arbol1.insert(1);
+arbol1.insert(21);
+let testArr = [];
+arbol1.depthFirstForEach(function (val) { testArr.push(val); }, "in-order");
+console.log(testArr);
+
+
+BinarySearchTree.prototype.breadthFirstForEach = function (cb, array = []) {
+  // si tiene ramas 
+  if (this.left) { // [piña]  // 2 [apple]
+    array.push(this.left);
+  }
+
+  if (this.right) { // [piña, kiwi] // 2 [apple, banana];
+    array.push(this.right);
+  }
+
+
+  // 1 [piña, kiwi] // 2 [apple, banana] 
+
+  cb(this.value); // [papa] // piña
+
+  if (array.length > 0) {
+    array.shift() // piña
+      .breadthFirstForEach(cb, array)
   }
 }
 
-BinarySearchTree.prototype.breadthFirstForEach = function (cb, array = []) {
-  if (this.left) {
-    array.push(this.left)
-  }
-  if (this.right) {
-    array.push(this.right)
-  }
-  cb(this.value)
-  if (array.length > 0) {
-    array.shift().breadthFirstForEach(cb, array)
-  }
-}
+//                    papa
+//                 /        \
+//               piña       kiwi
+//             /     \      /     \
+//          apple  banana  mango   limon
+
+var depth = [];
+arbol1.breadthFirstForEach(function (val) { depth.push(val); });
+console.log(depth);
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------

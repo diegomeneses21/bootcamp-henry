@@ -151,6 +151,10 @@ console.log(crearCadena("*", "*", "Hola"))
 // let textoUnderscore = crearCadena.bind(this.cadena, "_", "_")
 // console.log(textoUnderscore("Hola"));
 
+// let textoAsteriscos = crearCadena.bind(this,"*","*");
+// let textoGuiones = crearCadena.bind(this,"-","-");
+// let textoUnderscore = crearCadena.bind(this,"_","_"); 
+
 let textoAsteriscos = crearCadena.bind(null,"*","*");
 let textoGuiones = crearCadena.bind(null,"-","-");
 let textoUnderscore = crearCadena.bind(null,"_","_"); 

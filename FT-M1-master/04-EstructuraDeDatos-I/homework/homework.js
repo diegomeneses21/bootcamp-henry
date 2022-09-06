@@ -1,5 +1,7 @@
 'use strict'
 
+const StateBlock = require("markdown-it/lib/rules_block/state_block");
+
 /*
 Definir las funciones recursivas nFactorial y nFibonacci.
 
@@ -18,20 +20,36 @@ Como ejercicio adicional y completamente opcional, al terminar de resolver este 
 
 function nFactorial(n) {
 
-  if (n > -1 && n < 2) {
-    console.log(n);
-    return 1;
-  } else if (n < 0) {
-    console.log(n);
-    return 0;
+  // if (n > -1 && n < 2) {
+  //   console.log(n);
+  //   return 1;
+  // } else if (n < 0) {
+  //   console.log(n);
+  //   return 0;
+  // }
+  // console.log(n);
+  // return n * nFactorial(n - 1);
+
+  let result = 1;
+  for (let i = 1; i <= n; i++) {
+    result = result * i;
   }
-
-  console.log(n);
-  return n * nFactorial(n - 1);
-
+  return result;
 }
 console.log(nFactorial(4));
+// 3! ? --> 6
+// 4! --> 24
+// ---> n! = n * (n-1)!
 
+function factorialRec(num) {
+  // se llama a si misma 
+  // condicion de corte
+  // en gral el argumento con el cual se llama la fn rec nuevamente es distinto del original 
+  if (num < 0) return "No existe el factorial de un numero negativo"
+  if (num <= 1) return 1;
+  return num * factorialRec(num - 1);
+}
+console.log(factorialRec(10));
 
 // Ejemplo: 0 , 1 , 1 , 2 , 3 , 5 , 8 , 13 , 21 , 34 , 55
 
@@ -56,6 +74,43 @@ console.log(nFibonacci(7));
 console.log(nFibonacci(8));
 console.log(nFibonacci(9));
 
+// ------------------------
+// PILA - STACK
+function Stack() {
+  this.arr = [];
+}
+
+let nuevoStack = new Stack();
+
+Stack.prototype.add = function (element) {
+  this.arr.push(element);
+}
+
+Stack.prototype.remove = function () {
+  this.arr.pop();
+}
+
+Stack.prototype.longitud = function () {
+  return (this.arr.length)
+}
+
+nuevoStack.add("first");
+nuevoStack.add("second");
+console.log(nuevoStack.arr);
+nuevoStack.remove();
+console.log(nuevoStack.arr);
+nuevoStack.longitud();
+
+// array
+// herramientas: pop, push,. shif, unshif, length
+
+// Stack 
+// herramientas/metodos: agregar, remover
+// --------------------------
+
+
+
+// --------------------------
 /*
 Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde el primer elemento que ingresa es el primero que se quita. Definir los siguientes métodos:
   - enqueue: agrega un valor respetando el orden.
